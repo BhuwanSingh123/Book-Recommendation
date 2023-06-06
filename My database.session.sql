@@ -9,7 +9,9 @@ CREATE TABLE `cart` (
   `price` int(100) NOT NULL,
   `quantity` int(100) NOT NULL,
   `image` varchar(100) NOT NULL,
-   PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`item_id`) REFERENCES `products`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `message` (
@@ -20,6 +22,7 @@ CREATE TABLE `message` (
   `number` varchar(12) NOT NULL,
   `message` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 CREATE TABLE `orders` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
@@ -34,13 +37,18 @@ CREATE TABLE `orders` (
   `placed_on` varchar(50) NOT NULL,
   `payment_status` varchar(20) NOT NULL DEFAULT 'pending',
   PRIMARY KEY (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `address`, `total_products`, `total_price`, `placed_on`, `payment_status`) VALUES
 (10, 3, 'rijan', '982324445', 'bhuwansingh199@gmail.com', 'cash on delivery', 'flat no. , kool, ,  - ', ', Harry Potter (1) ', 500, '12-May-2023', 'completed'),
-(11, 3, 'fdsfsd', '98232323', 'sdsd@gmail.com', 'cash on delivery', 'flat no. , dsd, ,  - ', ', Harry Potter (1) ', 500, '12-May-2023', 'pending'),
-(12, 3, 'kool', '982322223', 'bhuwans@gmail.com', 'cash on delivery', 'khsud', ', Harry Potter (1) ', 500, '12-May-2023', 'pending'),
-(13, 3, 'chandan', '999', 'chandan@gmail.com', 'paytm', 'Dallu', ', The Book Of Names (1) ', 400, '06-Jun-2023', 'pending'),
-(14, 3, 'chandan', '9843177805', 'chandan123@gmail.com', 'khalti', 'dallu', ', The Book Of Names (1) ', 400, '06-Jun-2023', 'pending');
+(11, 3, 'fdsfsd', '98232323', 'sdsd@gmail.com', 'cash on delivery', 'flat no. , dsd, ,  - ', ', Harry Potter (1) ', 500, '12-May-2023', 'completed'),
+(12, 3, 'kool', '982322223', 'bhuwans@gmail.com', 'cash on delivery', 'khsud', ', Harry Potter (1) ', 500, '12-May-2023', 'completed'),
+(13, 3, 'chandan', '999', 'chandan@gmail.com', 'paytm', 'Dallu', ', The Book Of Names (1) ', 400, '06-Jun-2023', 'completed'),
+(14, 3, 'chandan', '9843177805', 'chandan123@gmail.com', 'khalti', 'dallu', ', The Book Of Names (1) ', 400, '06-Jun-2023', 'completed'),
+(15, 6, 'Chandan Shakya', '9843177805', 'notch0andan@gmail.com', 'cash on delivery', 'Dallu, Kathmandu', ', The Book Of Names (1) ', 400, '06-Jun-2023', 'completed'),
+(16, 7, 'Chandan Shakya', '9843177805', 'notch0andan@gmail.com', 'cash on delivery', 'Dallu, Kathmandu', ', The Book Of Names (1) , Harry Potter (1) , The Unspoken Name (1) ', 1400, '06-Jun-2023', 'completed'),
+(17, 8, 'Kabir Deula', '9843177805', 'kabir@gmail.com', 'cash on delivery', 'Dhalko', ', The Book Of Names (1) , Harry Potter (1) , The Unspoken Name (1) , THE LIAR''S DICTNORY (1) , A Boy Called BAT (1) , The Silver Serpent (1) ', 3450, '06-Jun-2023', 'completed'),
+(18, 8, 'Kabir Deula', '9843177805', 'kabir@gmail.com', 'cash on delivery', 'Dhalko', ', Harry Potter (1) ', 500, '06-Jun-2023', 'completed');
 
 CREATE TABLE `products` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
@@ -53,7 +61,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `image`) VALUES
 (1, 'The Book Of Names', 400, 'book1.jpg'),
 (3, 'Harry Potter', 500, 'book2.jpg'),
 (4, 'The Unspoken Name', 500, 'images.jpg'),
-(5, 'THE LIAR\'S DICTNORY', 1000, 'd.jpg'),
+(5, 'THE LIAR''S DICTNORY', 1000, 'd.jpg'),
 (6, 'A Boy Called BAT', 550, 'imag.jpg'),
 (8, 'The Silver Serpent', 500, 'g.jpg');
 
@@ -76,34 +84,74 @@ CREATE TABLE `user_rating` (
   `item_id` int(100) NOT NULL,
   `rating` int(1) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_user_rating_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_user_rating_item_id` FOREIGN KEY (`item_id`) REFERENCES `products` (`id`)
+  CONSTRAINT `fk_user_rating_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_user_rating_item_id` FOREIGN KEY (`item_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
 );
 
+INSERT INTO `user_rating` (`id`, `user_id`, `item_id`, `rating`) VALUES
+(1, 7, 1, 4),
+(2, 7, 3, 3),
+(3, 7, 4, 2),
+(4, 8, 1, 3),
+(5, 8, 3, 4),
+(6, 8, 4, 3),
+(7, 8, 5, 3),
+(8, 8, 6, 3),
+(9, 8, 8, 3);
 
 create table item_ids(
   `order_id` int NOT NULL,
   `item_ids` int NOT NULL,
-  Foreign Key (order_id) REFERENCES orders(id),
-  FOREIGN KEY (item_ids) REFERENCES products(id)
+  FOREIGN Key (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (item_ids) REFERENCES products(id) ON DELETE CASCADE
 )
+
+INSERT INTO `item_ids` (`order_id`, `item_ids`) VALUES
+(15, 1),
+(16, 1),
+(16, 3),
+(16, 4),
+(17, 1),
+(17, 3),
+(17, 4),
+(17, 5),
+(17, 6),
+(17, 8),
+(18, 3);
 
 -- SET @sql = NULL;
 
 -- SELECT
 --   GROUP_CONCAT(DISTINCT
 --     CONCAT(
---       'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS ', name
+--       'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS `', name, '`'
 --     )
 --   ) INTO @sql
--- FROM users;
+-- FROM users
+-- WHERE user_type = 'user';
 
 -- SET @sql = CONCAT('SELECT p.name AS Book, ', @sql, '
 --                    FROM products p
 --                    LEFT JOIN user_rating r ON p.id = r.item_id
 --                    LEFT JOIN users u ON r.user_id = u.id
+--                    WHERE u.user_type = "user"
 --                    GROUP BY p.id');
 
 -- PREPARE stmt FROM @sql;
 -- EXECUTE stmt;
 -- DEALLOCATE PREPARE stmt;
+
+CREATE VIEW product_ratings_view AS
+SELECT p.name AS Book, 
+  GROUP_CONCAT(DISTINCT
+    CONCAT(
+      'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS `', name, '`'
+    )
+  ) AS Ratings
+FROM users
+WHERE user_type = 'user'
+JOIN products p ON 1=1
+LEFT JOIN user_rating r ON p.id = r.item_id
+LEFT JOIN users u ON r.user_id = u.id
+WHERE u.user_type = 'user'
+GROUP BY p.id;

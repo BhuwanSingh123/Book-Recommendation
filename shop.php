@@ -68,7 +68,7 @@ if (isset($_POST['add_to_cart'])) {
          $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
          if (mysqli_num_rows($select_products) > 0) {
             while ($fetch_products = mysqli_fetch_assoc($select_products)) {
-               $select_query = "SELECT AVG(rating) AS rating FROM user_rating WHERE item_id = '" . $fetch_products['id'] . "'";
+               $select_query = "SELECT ROUND(AVG(rating),0) AS rating FROM user_rating WHERE item_id = '" . $fetch_products['id'] . "'";
                     $result = mysqli_query($conn, $select_query);
                     $fetch_rating = mysqli_fetch_assoc($result);
                ?>
