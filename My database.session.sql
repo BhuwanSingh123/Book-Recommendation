@@ -77,7 +77,7 @@ CREATE TABLE `user_rating` (
   `rating` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_rating_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `fk_user_rating_book_id` FOREIGN KEY (`book_id`) REFERENCES `products` (`id`)
+  CONSTRAINT `fk_user_rating_item_id` FOREIGN KEY (`item_id`) REFERENCES `products` (`id`)
 );
 
 
@@ -88,22 +88,22 @@ create table item_ids(
   FOREIGN KEY (item_ids) REFERENCES products(id)
 )
 
-SET @sql = NULL;
+-- SET @sql = NULL;
 
-SELECT
-  GROUP_CONCAT(DISTINCT
-    CONCAT(
-      'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS ', name
-    )
-  ) INTO @sql
-FROM users;
+-- SELECT
+--   GROUP_CONCAT(DISTINCT
+--     CONCAT(
+--       'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS ', name
+--     )
+--   ) INTO @sql
+-- FROM users;
 
-SET @sql = CONCAT('SELECT p.name AS Book, ', @sql, '
-                   FROM products p
-                   LEFT JOIN user_rating r ON p.id = r.item_id
-                   LEFT JOIN users u ON r.user_id = u.id
-                   GROUP BY p.id');
+-- SET @sql = CONCAT('SELECT p.name AS Book, ', @sql, '
+--                    FROM products p
+--                    LEFT JOIN user_rating r ON p.id = r.item_id
+--                    LEFT JOIN users u ON r.user_id = u.id
+--                    GROUP BY p.id');
 
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+-- PREPARE stmt FROM @sql;
+-- EXECUTE stmt;
+-- DEALLOCATE PREPARE stmt;
