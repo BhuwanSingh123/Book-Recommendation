@@ -88,16 +88,12 @@ create table item_ids(
   FOREIGN KEY (item_ids) REFERENCES products(id)
 )
 
-
 SET @sql = NULL;
 
 SELECT
   GROUP_CONCAT(DISTINCT
     CONCAT(
-      'GROUP_CONCAT(IFNULL(CASE WHEN u.id = ',
-      id,
-      ' THEN r.rating END, \'\') ORDER BY u.id) AS ',
-      name
+      'COALESCE(MAX(IFNULL(CASE WHEN u.id = ', id, ' THEN r.rating END, 0)), 0) AS ', name
     )
   ) INTO @sql
 FROM users;
