@@ -80,12 +80,11 @@ if (isset($_POST['add_to_cart'])) {
                 echo "Error storing rating: " . mysqli_error($conn);
             }
         }
-        header('location:ratingsample.php');
     }
     ?>
 
     <?php include 'header.php'; ?>
-
+    <?php include 'ratingsample.php';?>
     <section class="products">
 
         <h1 class="title">Rating</h1>

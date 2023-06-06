@@ -65,7 +65,9 @@ VALUES (1, 'The Book Of Names', 400, 'book1.jpg'),
   (3, 'The Unspoken Name', 500, 'images.jpg'),
   (4, 'THE LIARS DICTNORY', 1000, 'd.jpg'),
   (5, 'A Boy Called BAT', 550, 'imag.jpg'),
-  (6, 'The Silver Serpent', 500, 'g.jpg');
+  (6, 'The Silver Serpent', 500, 'g.jpg'),
+  (7, 'The Hunger Games', 700, '2767052.jpg');
+
 CREATE TABLE `cart` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `item_id` int NOT NULL,
@@ -237,7 +239,7 @@ CREATE TABLE `user_rating` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `user_id` int(100) NOT NULL,
   `item_id` int(100) NOT NULL,
-  `rating` int(1) NOT NULL,
+  `rating` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`item_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
@@ -288,33 +290,36 @@ VALUES (15, 1),
 -- PREPARE stmt FROM @sql;
 -- EXECUTE stmt;
 -- DEALLOCATE PREPARE stmt;
-SET @sql = NULL;
-SELECT GROUP_CONCAT(
-    DISTINCT CONCAT(
-      'COALESCE(MAX(IFNULL(CASE WHEN u.id = ',
-      id,
-      ' THEN r.rating END, 0)), 0) AS `',
-      name,
-      '`'
-    )
-  ) INTO @sql
-FROM users
-WHERE user_type = 'user';
-SET @sql = CONCAT(
-    'CREATE VIEW product_ratings_view AS
-SELECT p.name AS Book, ',
-    @sql,
-    '
-FROM products p
-LEFT JOIN user_rating r ON p.id = r.item_id
-LEFT JOIN users u ON r.user_id = u.id
-WHERE u.user_type = "user"
-GROUP BY p.id'
-  );
-PREPARE stmt
-FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+
+
+
+-- SET @sql = NULL;
+-- SELECT GROUP_CONCAT(
+--     DISTINCT CONCAT(
+--       'COALESCE(MAX(IFNULL(CASE WHEN u.id = ',
+--       id,
+--       ' THEN r.rating END, 0)), 0) AS `',
+--       name,
+--       '`'
+--     )
+--   ) INTO @sql
+-- FROM users
+-- WHERE user_type = 'user';
+-- SET @sql = CONCAT(
+--     'CREATE VIEW product_ratings_view AS
+-- SELECT p.name AS Book, ',
+--     @sql,
+--     '
+-- FROM products p
+-- LEFT JOIN user_rating r ON p.id = r.item_id
+-- LEFT JOIN users u ON r.user_id = u.id
+-- WHERE u.user_type = "user"
+-- GROUP BY p.id'
+--   );
+-- PREPARE stmt
+-- FROM @sql;
+-- EXECUTE stmt;
+-- DEALLOCATE PREPARE stmt;
 
 
 SET @sql = NULL;
@@ -330,14 +335,14 @@ SELECT GROUP_CONCAT(
 FROM users
 WHERE user_type = 'user';
 SET @sql = CONCAT(
-    'CREATE VIEW product_ratings_view_no_book_name AS
+    'CREATE OR REPLACE VIEW product_ratings_view_no_book_name AS
 SELECT ',
     @sql,
     '
 FROM products p
 LEFT JOIN user_rating r ON p.id = r.item_id
 LEFT JOIN users u ON r.user_id = u.id
-WHERE u.user_type = "user"
+WHERE u.user_type = \"user\"
 GROUP BY p.id'
   );
 PREPARE stmt
