@@ -1,3 +1,4 @@
+-- Active: 1686030913861@@127.0.0.1@3306@shop_db
 DROP DATABASE IF EXISTS shop_db;
 CREATE DATABASE shop_db;
 USE shop_db;
@@ -328,7 +329,7 @@ SELECT GROUP_CONCAT(
       'COALESCE(MAX(IFNULL(CASE WHEN u.id = ',
       id,
       ' THEN r.rating END, 0)), 0) AS `',
-      name,
+      id,
       '`'
     )
   ) INTO @sql
