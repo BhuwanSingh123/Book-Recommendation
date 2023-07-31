@@ -12,11 +12,13 @@ if(!isset($admin_id)){
 
 if(isset($_POST['update_order'])){
 
-
+if(isset($_POST['update_payment'])){
+   
    $order_update_id = $_POST['order_id'];
    $update_payment = $_POST['update_payment'];
    mysqli_query($conn, "UPDATE `orders` SET payment_status = '$update_payment' WHERE id = '$order_update_id'") or die('query failed');
    $message[] = 'payment status has been updated!';
+}
 
 }
 
