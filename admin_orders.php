@@ -12,10 +12,13 @@ if(!isset($admin_id)){
 
 if(isset($_POST['update_order'])){
 
+if(isset($_POST['update_payment'])){
+   
    $order_update_id = $_POST['order_id'];
    $update_payment = $_POST['update_payment'];
    mysqli_query($conn, "UPDATE `orders` SET payment_status = '$update_payment' WHERE id = '$order_update_id'") or die('query failed');
    $message[] = 'payment status has been updated!';
+}
 
 }
 
@@ -69,7 +72,7 @@ if(isset($_GET['delete'])){
          <form action="" method="post">
             <input type="hidden" name="order_id" value="<?php echo $fetch_orders['id']; ?>">
             <select name="update_payment">
-               <option value="" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
+               <option value="<?php echo $fetch_orders['payment_status']; ?>" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
                <option value="pending">pending</option>
                <option value="completed">completed</option>
             </select>

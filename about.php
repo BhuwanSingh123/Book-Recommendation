@@ -63,39 +63,21 @@ if(!isset($user_id)){
       <div class="box">
          <img src="images/pic-1.jpg" alt="">
          <p>Reasonable Price</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
+      
          <h3>Chiran</h3>
       </div>
 
       <div class="box">
          <img src="images/pic-2.jpg" alt="">
          <p>Recommend Nice Books</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
+       
          <h3>Robin</h3>
       </div>
 
       <div class="box">
          <img src="images/pic-3.jpg" alt="">
          <p>Wide Variety of Books</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
+     
          <h3>Rakesh</h3>
       </div>
 

@@ -60,7 +60,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 $N = count($R);
 $M = count($R[0]);
 //Number of latent factors
-$K = 2;
+$K  = 2;
 
 $P = generateRandomArray($N, $K);
 $Q = generateRandomArray($M, $K);
