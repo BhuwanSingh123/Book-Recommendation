@@ -170,7 +170,7 @@ if (isset($_POST['update_product'])) {
             while ($fetch_products = mysqli_fetch_assoc($select_products)) {
          ?>
                <div class="box">
-                  <img src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                  <img src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="" style="max-width: 100%; height: auto;">
                   <div class="name">
                      <?php echo $fetch_products['name']; ?>
                   </div>
