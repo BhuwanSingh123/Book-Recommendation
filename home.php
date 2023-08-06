@@ -133,7 +133,7 @@ if (isset($_POST['add_to_cart'])) {
 
          ?>
                <form action="" method="post" class="box">
-                  <img class="image" src="uploaded_img/<?php echo $product['image']; ?>" alt="">
+                  <img class="image" src="uploaded_img/<?php echo $product['image']; ?>" alt="" style="max-width: 100%; height: auto;">
                   <div class="name">
                      <?php echo $product['name']; ?>
                   </div>

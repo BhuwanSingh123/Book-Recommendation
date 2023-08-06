@@ -73,7 +73,7 @@ if (isset($_POST['add_to_cart'])) {
                     $fetch_rating = mysqli_fetch_assoc($result);
                ?>
                <form action="" method="post" class="box">
-                  <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                  <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="" style="max-width: 100%; height: auto;">
                   <div class="name">
                      <?php echo $fetch_products['name']; ?>
                   </div>
